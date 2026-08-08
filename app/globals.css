@@ -1,26 +1,246 @@
 @import "tailwindcss";
 
+/* ─── T-Rex Productions brand tokens ─────────────────────────────────
+   Palette lifted from the original site: royal navy stage (#00103f) and
+   the logo footprint gradient — lime #6bfd5c → spring #45e78f → teal #15cbd0. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --abyss: #041033;
+  --deep: #071847;
+  --surface: #0c2260;
+  --line: rgba(93, 210, 247, 0.16);
+  --cyan: #00e5ff;
+  --electric: #2e7cff;
+  --violet: #7c5cff;
+  --lime: #6bfd5c;
+  --spring: #45e78f;
+  --teal: #15cbd0;
+  --mist: #9db2d9;
+  --white: #eef4ff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-abyss: var(--abyss);
+  --color-deep: var(--deep);
+  --color-surface: var(--surface);
+  --color-cyan: var(--cyan);
+  --color-electric: var(--electric);
+  --color-violet: var(--violet);
+  --color-lime: var(--lime);
+  --color-spring: var(--spring);
+  --color-teal: var(--teal);
+  --color-mist: var(--mist);
+  --color-frost: var(--white);
+  --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--abyss);
+  color: var(--white);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(69, 231, 143, 0.4);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #12305a;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1a4a86;
+}
+
+/* ─── Utilities ──────────────────────────────────────────────────── */
+
+.text-glow {
+  text-shadow:
+    0 0 18px rgba(21, 203, 208, 0.55),
+    0 0 60px rgba(21, 203, 208, 0.25);
+}
+
+/* Glow for gradient (background-clip) text — drop-shadow tracks glyph alpha. */
+.glow-drop {
+  filter: drop-shadow(0 0 16px rgba(69, 231, 143, 0.4));
+}
+
+.holo-panel {
+  background: linear-gradient(
+    160deg,
+    rgba(12, 26, 66, 0.78),
+    rgba(6, 14, 44, 0.6)
+  );
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 16px 44px rgba(2, 6, 26, 0.55);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.holo-panel:hover {
+  border-color: rgba(69, 231, 143, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(69, 231, 143, 0.08),
+    0 20px 56px rgba(2, 6, 26, 0.6),
+    0 8px 48px rgba(69, 231, 143, 0.12);
+}
+
+/* HUD corner brackets */
+.hud-corners {
+  position: relative;
+  border-radius: 0.75rem;
+}
+.hud-corners::before,
+.hud-corners::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(69, 231, 143, 0.6);
+  border-style: solid;
+  transition: all 0.3s ease;
+}
+.hud-corners::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+  border-top-left-radius: 0.75rem;
+}
+.hud-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+  border-bottom-right-radius: 0.75rem;
+}
+.hud-corners:hover::before,
+.hud-corners:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+/* Scanline sweep overlay */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(21, 203, 208, 0.014) 3px,
+    rgba(21, 203, 208, 0.014) 4px
+  );
+}
+
+/* Fine background grid for content sections */
+.section-grid {
+  background-image:
+    linear-gradient(rgba(46, 124, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 124, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Logo footprint gradient — the brand's signature ramp */
+.gradient-text {
+  background: linear-gradient(92deg, var(--lime) 5%, var(--spring) 48%, var(--teal) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-border {
+  border: 1px solid transparent;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(var(--deep), var(--deep)) padding-box,
+    linear-gradient(120deg, var(--lime), var(--teal)) border-box;
+  box-shadow: 0 16px 44px rgba(2, 6, 26, 0.55);
+}
+
+.gradient-border-pill {
+  border-radius: 9999px;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Sound-toggle equalizer bars */
+@keyframes eq {
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 14px;
+  }
+}
+.animate-eq {
+  animation: eq 0.9s ease-in-out infinite;
+}
+
+/* RGB-split glitch on the hero headline.
+   Uses drop-shadow (not text-shadow) so it tracks the glyph alpha and
+   works on background-clip:text gradients without filling them. */
+@keyframes rgb-split {
+  0%,
+  86%,
+  100% {
+    filter: drop-shadow(0 0 16px rgba(0, 229, 255, 0.4));
+    transform: translate(0);
+  }
+  88% {
+    filter: drop-shadow(-3px 0 rgba(255, 0, 80, 0.55))
+      drop-shadow(3px 0 rgba(0, 229, 255, 0.55));
+    transform: translate(1px, -1px);
+  }
+  91% {
+    filter: drop-shadow(3px 0 rgba(255, 0, 80, 0.55))
+      drop-shadow(-3px 0 rgba(0, 229, 255, 0.55));
+    transform: translate(-1px, 1px);
+  }
+  94% {
+    filter: drop-shadow(0 0 16px rgba(0, 229, 255, 0.4));
+    transform: translate(0);
+  }
+}
+.glitch {
+  display: inline-block;
+  animation: rgb-split 5.5s steps(1, end) infinite;
 }
