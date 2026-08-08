@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { CONTACT, NAV_LINKS } from "@/lib/data";
+import { withBase } from "@/lib/paths";
 import { sound } from "@/lib/audio";
 
 /* ─── Brand mark — the original T-Rex Productions logo ───────────── */
@@ -16,7 +17,7 @@ export function BrandMark() {
       onMouseEnter={() => sound.blip(1200)}
     >
       <Image
-        src="/brand/logo.png"
+        src={withBase("/brand/logo.png")}
         alt="T-Rex Productions"
         width={327}
         height={106}

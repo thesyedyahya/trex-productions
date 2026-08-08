@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { animate, motion, useMotionValue } from "motion/react";
 import { SERVICES } from "@/lib/data";
+import { withBase } from "@/lib/paths";
 import { sound } from "@/lib/audio";
 import { SectionHeading } from "./Sections";
 
@@ -103,7 +104,7 @@ function FlipCard({
           <div className="flex items-start justify-between">
             <span className="font-mono text-sm text-spring">0{index + 1}</span>
             <Image
-              src="/brand/footprint.png"
+              src={withBase("/brand/footprint.png")}
               alt=""
               width={86}
               height={108}
@@ -130,7 +131,7 @@ function FlipCard({
 
           {/* oversized watermark */}
           <Image
-            src="/brand/footprint.png"
+            src={withBase("/brand/footprint.png")}
             alt=""
             width={86}
             height={108}

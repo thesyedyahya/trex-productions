@@ -12,10 +12,9 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF, useTexture, Float } from "@react-three/drei";
 import * as THREE from "three";
 
-// Raw loaders (fetch/useTexture) don't get Next's basePath automatically,
-// so prefix explicitly for the GitHub Pages subpath build.
-const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const MODEL_PATH = `${BASE}/models/trex.glb`;
+import { withBase } from "@/lib/paths";
+
+const MODEL_PATH = withBase("/models/trex.glb");
 
 /*
  * Brand "specimen" treatment: solid gunmetal armor catching the stage's
@@ -149,7 +148,7 @@ function Clapperboard() {
   const stripeXs = [-1.05, -0.63, -0.21, 0.21, 0.63, 1.05];
 
   // Brand logo on the back of the board — visible as the scene rotates.
-  const logoTex = useTexture(`${BASE}/brand/logo.png`);
+  const logoTex = useTexture(withBase("/brand/logo.png"));
   logoTex.colorSpace = THREE.SRGBColorSpace;
 
   return (
